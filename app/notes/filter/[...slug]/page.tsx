@@ -4,27 +4,27 @@ import {
   QueryClient,
 } from '@tanstack/react-query';
 import NotesClient from './Notes.client';
-import { fetchNotes, getCategories, Tags } from '@/lib/api';
+import { fetchNotes, CategoriesList, Tags } from '@/lib/api';
 
 export const metadata = {
   title: 'Notes',
 };
 interface NotesProps {
-  params: Promise<{ slug: Tags }>;
+  params: { slug: Tags };
 }
 export const generateStaticParams = async () => {
-  const categories = getCategories;
-  return categories.map((category) => ({ slug: [category] }));
+  const categories = CategoriesList;
+  return categories.map((category: Tags[number]) => ({ slug: [category] }));
 };
 
 export default async function Notes({ params }: NotesProps) {
   const queryClient = new QueryClient();
-  const categories = getCategories;
-  const { slug } = await params;
+  const categories = CategoriesList;
+  const { slug } = params;
   const category = slug[0] === 'All' ? undefined : slug[0];
 
   await queryClient.prefetchQuery({
-    queryKey: ['notes', '1', '12', '', category],
+    queryKey: ['notes', { category }],
     queryFn: () => fetchNotes(1, 12, '', category),
   });
 

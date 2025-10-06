@@ -1,9 +1,9 @@
 import css from './Header.module.css';
 import Link from 'next/link';
-import { getCategories } from '@/lib/api';
+import { CategoriesList } from '@/lib/api';
 import TagsMenu from '../TagsMenu/TagsMenu';
 const Header = async () => {
-  const categories = getCategories;
+  const categories = CategoriesList;
   return (
     <header className={css.header}>
       <nav aria-label="Main Navigation">

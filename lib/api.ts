@@ -50,4 +50,4 @@ export const deleteNote = async (id: string): Promise<Note> => {
   const res = await axios.delete<Note>(`/notes/${id}`);
   return res.data;
 };
-export const getCategories = Tags;
+export const CategoriesList = Tags;
