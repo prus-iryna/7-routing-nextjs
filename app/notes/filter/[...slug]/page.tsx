@@ -9,19 +9,24 @@ import { fetchNotes, CategoriesList, Tags } from '@/lib/api';
 export const metadata = {
   title: 'Notes',
 };
+
 interface NotesProps {
-  params: { slug: Tags };
+  params: Promise<{ slug: string[] }>;
 }
+
 export const generateStaticParams = async () => {
   const categories = CategoriesList;
+
   return categories.map((category: Tags[number]) => ({ slug: [category] }));
 };
 
 export default async function Notes({ params }: NotesProps) {
+  const { slug } = await params;
+
   const queryClient = new QueryClient();
   const categories = CategoriesList;
-  const { slug } = params;
-  const category = slug[0] === 'All' ? undefined : slug[0];
+  const category =
+    slug[0] === 'All' ? undefined : (slug[0] as Exclude<Tags[number], 'All'>);
 
   await queryClient.prefetchQuery({
     queryKey: ['notes', { category }],

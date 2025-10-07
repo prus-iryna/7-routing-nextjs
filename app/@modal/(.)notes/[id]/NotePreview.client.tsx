@@ -31,7 +31,7 @@ const NotePreviewClient = ({ id }: NotePreviewClientProps) => {
       <h2>{note.title}</h2>
       <b>{note.tag}</b>
       <p>{note.content}</p>
-      <p>{note.updatedAt ?? note.createdAt}</p>
+      <p>{note.createdAt}</p>
     </Modal>
   );
 };
